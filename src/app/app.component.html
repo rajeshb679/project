@@ -1,11 +1,15 @@
-<app-header (buttonClicked)="loadComponent($event)">
+<!-- <app-header (buttonClicked)="loadComponent($event)"> -->
+<app-header (feature)="onNavigation($event)">
+
 
 </app-header>
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <app-recipes *ngIf="loadRecipe"></app-recipes>
-      <app-shopping-list *ngIf="loadShopping"></app-shopping-list>
+      <!-- <app-recipes *ngIf="loadRecipe"></app-recipes>
+      <app-shopping-list *ngIf="loadShopping"></app-shopping-list> -->
+      <app-recipes *ngIf=" feature === 'Recipe'"></app-recipes>
+      <app-shopping-list *ngIf="feature === 'Shopping'"></app-shopping-list>
     </div>
   </div>
 </div>

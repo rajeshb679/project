@@ -18,4 +18,8 @@ export class AppComponent {
             this.loadShopping = true;
         }
     }
+    feature = 'Recipe';
+    onNavigation(feature): void {
+        this.feature = feature;
+    }
 }
