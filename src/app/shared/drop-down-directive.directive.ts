@@ -11,5 +11,5 @@ export class DropDownDirectiveDirective {
         console.log(this.elRef);
         console.log(event);
     }
-    constructor(private elRef: ElementRef): void {}
+    constructor(private elRef: ElementRef) {}
 }
