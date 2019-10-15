@@ -14,7 +14,13 @@ export class ShoppingService {
         this.Ingredients.push(ingredient);
         this.addItemEvent.emit();
     }
+
     getIngredients(): Ingredient[] {
         return this.Ingredients.slice();
+    }
+
+    addItems(ingredient: Ingredient[]): void {
+        this.Ingredients.push(...ingredient);
+        this.addItemEvent.emit();
     }
 }
