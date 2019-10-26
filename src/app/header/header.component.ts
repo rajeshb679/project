@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-header',
@@ -8,6 +9,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 export class HeaderComponent {
     // @Output() buttonClicked = new EventEmitter<{ buttonType: string }>();
     @Output() feature = new EventEmitter<string>();
+    constructor(private route: ActivatedRoute, private router: Router) {}
 
     loadRecipe(): void {
         // this.buttonClicked.emit({ buttonType: 'RECIPE' });
@@ -18,6 +20,13 @@ export class HeaderComponent {
     }
 
     featureSelected(feature: string): void {
-        this.feature.emit(feature);
+        // this.feature.emit(feature);
+        if (feature === 'Recipe') {
+            this.router.navigate([`/recipes`]);
+        } else {
+            if (feature === 'Shopping') {
+                this.router.navigate([`/shopping-list`]);
+            }
+        }
     }
 }
