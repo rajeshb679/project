@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class HeaderComponent {
     // @Output() buttonClicked = new EventEmitter<{ buttonType: string }>();
     // @Output() feature = new EventEmitter<string>();
-    // constructor(private route: ActivatedRoute, private router: Router) {}
+    constructor(private route: ActivatedRoute, private router: Router) {}
 
     loadRecipe(): void {
         // this.buttonClicked.emit({ buttonType: 'RECIPE' });
@@ -19,14 +19,14 @@ export class HeaderComponent {
         // this.buttonClicked.emit({ buttonType: 'SHOPPING' });
     }
 
-    // featureSelected(feature: string): void {
-    //     // this.feature.emit(feature);
-    //     if (feature === 'Recipe') {
-    //         this.router.navigate([`/recipes`]);
-    //     } else {
-    //         if (feature === 'Shopping') {
-    //             this.router.navigate([`/shopping-list`]);
-    //         }
-    //     }
-    // }
+    featureSelected(feature: string): void {
+        // this.feature.emit(feature);
+        if (feature === 'Recipe') {
+            this.router.navigate([`/recipes`]);
+        } else {
+            if (feature === 'Shopping') {
+                this.router.navigate([`/shopping-list`]);
+            }
+        }
+    }
 }
