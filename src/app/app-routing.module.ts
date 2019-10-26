@@ -34,6 +34,7 @@ const appRoutes: Routes = [
             { path: ':id/edit', component: RecipeEditComponent },
         ],
     },
+    // { path: 'new', component: RecipeEditComponent },
 ];
 
 @NgModule({
