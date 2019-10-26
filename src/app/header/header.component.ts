@@ -10,11 +10,11 @@ export class HeaderComponent {
     @Output() feature = new EventEmitter<string>();
 
     loadRecipe(): void {
-        this.buttonClicked.emit({ buttonType: 'RECIPE' });
+        // this.buttonClicked.emit({ buttonType: 'RECIPE' });
     }
 
     loadShoppingList(): void {
-        this.buttonClicked.emit({ buttonType: 'SHOPPING' });
+        // this.buttonClicked.emit({ buttonType: 'SHOPPING' });
     }
 
     featureSelected(feature: string): void {
