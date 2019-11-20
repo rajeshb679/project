@@ -61,6 +61,20 @@ export class RecipeEditComponent implements OnInit {
         return (this.recipeForm.get('ingredients') as FormArray).value;
     }
 
-    onDeleteIngredient(index: number): void {}
-    onSubmit(): void {}
+    onDeleteIngredient(index: number): void {
+        (this.recipeForm.get('ingredients') as FormArray).removeAt(index);
+    }
+
+    onSubmit(): void {
+        console.log(this.recipeForm);
+    }
+
+    onAddIngredient(): void {
+        (this.recipeForm.get('ingredients') as FormArray).push(
+            new FormGroup({
+                name: new FormControl(null),
+                amount: new FormControl(null),
+            })
+        );
+    }
 }
