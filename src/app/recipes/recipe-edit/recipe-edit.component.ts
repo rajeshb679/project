@@ -35,12 +35,32 @@ export class RecipeEditComponent implements OnInit {
             recipeImagePath = recipe.imagePath;
             recipeDescription = recipe.description;
         }
+
         this.recipeForm = new FormGroup({
             name: new FormControl(recipeName),
             imagePath: new FormControl(recipeImagePath),
             description: new FormControl(recipeDescription),
             ingredients: new FormArray([]),
         });
+
+        if (this.editMode && recipe.ingredient) {
+            recipe.ingredient.forEach(ingredient => {
+                (this.recipeForm.get('ingredients') as FormArray).push(
+                    new FormGroup({
+                        name: new FormControl(ingredient.name),
+                        amount: new FormControl(ingredient.amount),
+                    })
+                );
+            });
+            console.log(this.recipeForm.get('ingredients'));
+        }
     }
+
+    getIngredients(): any {
+        console.log((this.recipeForm.get('ingredients') as FormArray).value);
+        return (this.recipeForm.get('ingredients') as FormArray).value;
+    }
+
+    onDeleteIngredient(index: number): void {}
     onSubmit(): void {}
 }
