@@ -21,8 +21,9 @@
                         (click)="addItemWay2(inputName,inputAmount)">Add</button> -->
                     <button class="btn btn-success" type="submit"
                         [disabled]="f.invalid">{{editMode?'Update':'Add'}}</button>
-                    <button class="btn btn-danger" type="button">Delete</button>
-                    <button class="btn btn-primary" type="button">Clear</button>
+                    <button class="btn btn-danger" type="button" [disabled]="!editMode"
+                        (click)="deleteItem()">Delete</button>
+                    <button class="btn btn-primary" type="button" (click)="clear()">Clear</button>
 
                 </div>
             </div>

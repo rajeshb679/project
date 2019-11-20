@@ -37,4 +37,9 @@ export class ShoppingService {
         // this.addItemEvent.emit();
         this.addItemEvent.next();
     }
+
+    deleteItem(index: number): void {
+        this.Ingredients.splice(index, 1);
+        this.addItemEvent.next();
+    }
 }
