@@ -11,7 +11,7 @@
                     <label for="amount">Amount</label>
                     <!-- <input type="number" id="amount" class="form-control" #inputAmount> -->
                     <input type="number" id="amount" class="form-control" ngModel name="amount" required
-                        pattern="^[1-9]+[1-9]*$">
+                        pattern="^[1-9]+[0-9]*$">
                 </div>
             </div>
             <div class="row">
@@ -19,7 +19,8 @@
                     <!-- <button class="btn btn-success" type="submit" (click)="addItem()">Add</button> -->
                     <!-- <button class="btn btn-success" type="submit"
                         (click)="addItemWay2(inputName,inputAmount)">Add</button> -->
-                    <button class="btn btn-success" type="submit" [disabled]="f.invalid">Add</button>
+                    <button class="btn btn-success" type="submit"
+                        [disabled]="f.invalid">{{editMode?'Update':'Add'}}</button>
                     <button class="btn btn-danger" type="button">Delete</button>
                     <button class="btn btn-primary" type="button">Clear</button>
 
