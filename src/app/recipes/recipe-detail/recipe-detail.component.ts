@@ -40,5 +40,6 @@ export class RecipeDetailComponent implements OnInit {
     onDelete(): void {
         this.recipeService.deleteRecipe(this.id);
         this.router.navigate(['recipes']);
+        // this.router.navigate(['/recipes']); what is the difference between the two
     }
 }
