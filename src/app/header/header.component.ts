@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DataStorageService } from '../shared/data-storage.service';
 
 @Component({
     selector: 'app-header',
@@ -9,7 +10,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class HeaderComponent {
     // @Output() buttonClicked = new EventEmitter<{ buttonType: string }>();
     // @Output() feature = new EventEmitter<string>();
-    constructor(private route: ActivatedRoute, private router: Router) {}
+    constructor(
+        private route: ActivatedRoute,
+        private router: Router,
+        private dataStorageService: DataStorageService
+    ) {}
 
     loadRecipe(): void {
         // this.buttonClicked.emit({ buttonType: 'RECIPE' });
@@ -28,5 +33,9 @@ export class HeaderComponent {
                 this.router.navigate([`/shopping-list`]);
             }
         }
+    }
+
+    onSaveData(): void {
+        this.dataStorageService.stroeRecipes();
     }
 }
