@@ -10,20 +10,23 @@ import { Subject } from 'rxjs';
 export class RecipeService {
     recipesChange = new Subject<Recipe[]>();
     recipeSelected = new EventEmitter<Recipe>();
-    private recipes: Recipe[] = [
-        new Recipe(
-            'A Test Recipe',
-            'This is simply',
-            'https://cdn-image.myrecipes.com/sites/default/files/styles/4_3_horizontal_-_1200x900/public/mrtrending0475.jpg?itok=ULkGk3Pn',
-            [new Ingredient('Meat', 20), new Ingredient('Bread', 20)]
-        ),
-        new Recipe(
-            'Recipe Two',
-            'This is simply',
-            'https://cdn-image.myrecipes.com/sites/default/files/styles/4_3_horizontal_-_1200x900/public/mrtrending0475.jpg?itok=ULkGk3Pn',
-            [new Ingredient('chicken', 20), new Ingredient('fish', 20)]
-        ),
-    ];
+    // private recipes: Recipe[] = [
+    //     new Recipe(
+    //         'A Test Recipe',
+    //         'This is simply',
+    //         'https://cdn-image.myrecipes.com/sites/default/files/styles/4_3_horizontal_-_1200x900/public/mrtrending0475.jpg?itok=ULkGk3Pn',
+    //         [new Ingredient('Meat', 20), new Ingredient('Bread', 20)]
+    //     ),
+    //     new Recipe(
+    //         'Recipe Two',
+    //         'This is simply',
+    //         'https://cdn-image.myrecipes.com/sites/default/files/styles/4_3_horizontal_-_1200x900/public/mrtrending0475.jpg?itok=ULkGk3Pn',
+    //         [new Ingredient('chicken', 20), new Ingredient('fish', 20)]
+    //     ),
+    // ];
+
+    private recipes: Recipe[] = [];
+
     constructor(private shoppingService: ShoppingService) {}
 
     getRecipes(): Recipe[] {
