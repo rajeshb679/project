@@ -3,14 +3,18 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { DataStorageService } from '../shared/data-storage.service';
 import { Recipe } from './recipe.model';
 import { Observable } from 'rxjs';
+import { RecipeService } from '../services/recipe.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class RecipesResovlerService implements Resolve<Recipe[]> {
-    constructor(private recipesDataStorageService: DataStorageService) {}
+    constructor(private recipesDataStorageService: DataStorageService, private recipeService: RecipeService) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Recipe[]> {
-        return this.recipesDataStorageService.fetchRecipes();
+        const recipes = this.recipeService.getRecipes();
+        if (recipes.length === 0) {
+            return this.recipesDataStorageService.fetchRecipes();
+        }
     }
 }
