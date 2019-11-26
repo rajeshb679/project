@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -27,30 +27,39 @@ export class AuthService {
                     returnSecureToken: true,
                 }
             )
-            .pipe(
-                catchError(errorRes => {
-                    let errorMessage = 'An error ocurred';
-                    console.log(errorRes);
-                    if (!errorRes.error || !errorRes.error.error) {
-                        errorMessage = 'Network Error';
-                    }
-                    switch (errorRes.error.error.message) {
-                        case 'EMAIL_EXISTS':
-                            errorMessage = 'Email already exists';
-                    }
-                    return throwError(errorMessage);
-                })
-            );
+            .pipe(catchError(this.handleError));
     }
 
     loginIn(email: string, password: string): Observable<AuthResponseData> {
-        return this.http.post<AuthResponseData>(
-            'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCpsWcBX1Jb4Gin0kwbmGePQjCcswVMigA',
-            {
-                email: email,
-                password: password,
-                returnSecureToken: true,
-            }
-        );
+        return this.http
+            .post<AuthResponseData>(
+                'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCpsWcBX1Jb4Gin0kwbmGePQjCcswVMigA',
+                {
+                    email: email,
+                    password: password,
+                    returnSecureToken: true,
+                }
+            )
+            .pipe(catchError(this.handleError));
+    }
+
+    private handleError(errorRes: HttpErrorResponse): Observable<any> {
+        let errorMessage = 'An error ocurred';
+        console.log(errorRes);
+        if (!errorRes.error || !errorRes.error.error) {
+            errorMessage = 'Network Error';
+        }
+        switch (errorRes.error.error.message) {
+            case 'EMAIL_EXISTS':
+                errorMessage = 'Email already exists';
+                break;
+            case 'EMAIL_NOT_FOUND':
+                errorMessage = 'Email Not Found';
+                break;
+            case 'INVALID_PASSWORD':
+                errorMessage = 'Invalid Password Entered';
+                break;
+        }
+        return throwError(errorMessage);
     }
 }
