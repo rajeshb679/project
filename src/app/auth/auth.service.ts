@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, Subject } from 'rxjs';
+import { Observable, throwError, Subject, BehaviorSubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from './user.model';
 
@@ -16,7 +16,8 @@ export interface AuthResponseData {
     providedIn: 'root',
 })
 export class AuthService {
-    user = new Subject<User>();
+    // user = new Subject<User>();
+    user = new BehaviorSubject<User>(null);
     constructor(private http: HttpClient) {}
 
     singUp(email: string, password: string): Observable<AuthResponseData> {
