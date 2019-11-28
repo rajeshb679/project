@@ -19,6 +19,7 @@ export interface AuthResponseData {
 export class AuthService {
     // user = new Subject<User>();
     user = new BehaviorSubject<User>(null);
+    private tokenExpiationTimer: any;
     constructor(private http: HttpClient, private router: Router) {}
 
     singUp(email: string, password: string): Observable<AuthResponseData> {
@@ -81,18 +82,33 @@ export class AuthService {
 
         if (loadedUser.token) {
             this.user.next(loadedUser);
+            const expirationDate = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
+
+            this.autoLogout(expirationDate);
         }
     }
 
     logout(): void {
         this.user.next(null);
         this.router.navigate(['/login']);
+        localStorage.removeItem('userData');
+        if (this.tokenExpiationTimer) {
+            clearTimeout(this.tokenExpiationTimer);
+        }
+        this.tokenExpiationTimer = null;
+    }
+
+    autoLogout(expirationTime: number): void {
+        this.tokenExpiationTimer = setTimeout(() => {
+            this.logout();
+        }, expirationTime);
     }
 
     private handleAuth(email: string, id: string, token: string, expies: number): any {
         const expireData = new Date(new Date().getTime() + +expies * 1000);
         const user = new User(email, id, token, expireData);
         localStorage.setItem('userData', JSON.stringify(user));
+        this.autoLogout(expies * 1000);
         this.user.next(user);
     }
 
