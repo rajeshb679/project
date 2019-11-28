@@ -8,6 +8,7 @@ import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.compon
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipesResovlerService } from './recipes/recipes-resovler.service';
 import { AuthComponent } from './auth/auth.component';
+import { AuthGuardService } from './auth/auth-guard.service';
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/recipes', pathMatch: 'full' },
@@ -27,6 +28,7 @@ const appRoutes: Routes = [
     { path: 'shopping-list', component: ShoppingListComponent },
     {
         path: 'recipes',
+        canActivate: [AuthGuardService],
         component: RecipesComponent,
         children: [
             { path: '', component: RecipeStartComponent },
