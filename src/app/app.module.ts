@@ -42,5 +42,6 @@ import { PlaceHolderDirective } from './shared/PlaceHolder/place-holder-directiv
     imports: [BrowserModule, FormsModule, AppRoutingModule, HttpClientModule, ReactiveFormsModule],
     providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
     bootstrap: [AppComponent],
+    entryComponents: [AlertComponent],
 })
 export class AppModule {}

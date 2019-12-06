@@ -1,9 +1,10 @@
-import { Component, OnInit, ComponentFactoryResolver } from '@angular/core';
+import { Component, OnInit, ComponentFactoryResolver, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService, AuthResponseData } from './auth.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { AlertComponent } from '../shared/alert.component';
+import { PlaceHolderDirective } from '../shared/PlaceHolder/place-holder-directive.directive';
 
 @Component({
     selector: 'app-auth',
@@ -15,6 +16,7 @@ export class AuthComponent implements OnInit {
     isLoading = false;
     error: string = null;
     authObs: Observable<AuthResponseData>;
+    @ViewChild(PlaceHolderDirective, { static: true }) hostAlert: PlaceHolderDirective;
 
     constructor(
         private authService: AuthService,
@@ -60,5 +62,7 @@ export class AuthComponent implements OnInit {
 
     onHandleError(message: string): void {
         const alertCmpFactory = this.componentResolver.resolveComponentFactory(AlertComponent);
+        this.hostAlert.viewContainerRef.clear();
+        this.hostAlert.viewContainerRef.createComponent(alertCmpFactory);
     }
 }
