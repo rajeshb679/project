@@ -1,7 +1,7 @@
-import { Component, OnInit, ComponentFactoryResolver, ViewChild } from '@angular/core';
+import { Component, OnInit, ComponentFactoryResolver, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService, AuthResponseData } from './auth.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { AlertComponent } from '../shared/alert.component';
 import { PlaceHolderDirective } from '../shared/PlaceHolder/place-holder-directive.directive';
@@ -11,12 +11,13 @@ import { PlaceHolderDirective } from '../shared/PlaceHolder/place-holder-directi
     templateUrl: './auth.component.html',
     styleUrls: ['./auth.component.css'],
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnDestroy {
     isLogin = true;
     isLoading = false;
     error: string = null;
     authObs: Observable<AuthResponseData>;
     @ViewChild(PlaceHolderDirective, { static: true }) hostAlert: PlaceHolderDirective;
+    alertSub: Subscription;
 
     constructor(
         private authService: AuthService,
@@ -24,7 +25,9 @@ export class AuthComponent implements OnInit {
         private componentResolver: ComponentFactoryResolver
     ) {}
 
-    ngOnInit() {}
+    ngOnDestroy(): void {
+        this.alertSub.unsubscribe();
+    }
 
     onSwitchMode(): void {
         this.isLogin = !this.isLogin;
@@ -63,6 +66,11 @@ export class AuthComponent implements OnInit {
     onHandleError(message: string): void {
         const alertCmpFactory = this.componentResolver.resolveComponentFactory(AlertComponent);
         this.hostAlert.viewContainerRef.clear();
-        this.hostAlert.viewContainerRef.createComponent(alertCmpFactory);
+        const component = this.hostAlert.viewContainerRef.createComponent(alertCmpFactory);
+        component.instance.message = message;
+        this.alertSub = component.instance.close.subscribe(() => {
+            this.hostAlert.viewContainerRef.clear();
+            this.alertSub.unsubscribe();
+        });
     }
 }
