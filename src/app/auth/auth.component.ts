@@ -1,4 +1,4 @@
-import { Component, OnInit, ComponentFactoryResolver, ViewChild, OnDestroy } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService, AuthResponseData } from './auth.service';
 import { Observable, Subscription } from 'rxjs';
@@ -26,7 +26,7 @@ export class AuthComponent implements OnDestroy {
     ) {}
 
     ngOnDestroy(): void {
-        this.alertSub.unsubscribe();
+        // this.alertSub.unsubscribe();
     }
 
     onSwitchMode(): void {

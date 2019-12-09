@@ -61,7 +61,7 @@ export class RecipeEditComponent implements OnInit {
 
     getIngredients(): any {
         console.log((this.recipeForm.get('ingredients') as FormArray).value);
-        return (this.recipeForm.get('ingredients') as FormArray).value;
+        return (this.recipeForm.get('ingredients') as FormArray).controls;
     }
 
     onDeleteIngredient(index: number): void {
@@ -80,7 +80,7 @@ export class RecipeEditComponent implements OnInit {
     onAddIngredient(): void {
         (this.recipeForm.get('ingredients') as FormArray).push(
             new FormGroup({
-                name: new FormControl(null, Validators.required),
+                name: new FormControl(' ', Validators.required),
                 amount: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
             })
         );
