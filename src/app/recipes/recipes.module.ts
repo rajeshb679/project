@@ -19,14 +19,15 @@ import { RecipesRoutingModule } from './recipes-routing.module';
         RecipeStartComponent,
         RecipeEditComponent,
     ],
-    exports: [
-        RecipesComponent,
-        RecipeListComponent,
-        RecipeDetailComponent,
-        RecipeItemComponent,
-        RecipeStartComponent,
-        RecipeEditComponent,
-    ],
+    // No Longer Need to Export as this is used within the Recipes Module and App Module Has No child
+    // exports: [
+    //     RecipesComponent,
+    //     RecipeListComponent,
+    //     RecipeDetailComponent,
+    //     RecipeItemComponent,
+    //     RecipeStartComponent,
+    //     RecipeEditComponent,
+    // ],
     imports: [RouterModule, CommonModule, ReactiveFormsModule, RecipesRoutingModule],
 })
 export class RecipesModule {}
