@@ -1,14 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HeaderComponent } from './header/header.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
-import { RecipesComponent } from './recipes/recipes.component';
-import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
-import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
-import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
-import { RecipesResovlerService } from './recipes/recipes-resovler.service';
 import { AuthComponent } from './auth/auth.component';
-import { AuthGuardService } from './auth/auth-guard.service';
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/recipes', pathMatch: 'full' },
@@ -26,18 +19,18 @@ const appRoutes: Routes = [
     */
     { path: 'login', component: AuthComponent },
     { path: 'shopping-list', component: ShoppingListComponent },
-    {
-        path: 'recipes',
-        canActivate: [AuthGuardService],
-        component: RecipesComponent,
-        children: [
-            { path: '', component: RecipeStartComponent },
-            // New should be before id as new will be considered as id and detail component will be loaded
-            { path: 'new', component: RecipeEditComponent },
-            { path: ':id', component: RecipeDetailComponent, resolve: [RecipesResovlerService] },
-            { path: ':id/edit', component: RecipeEditComponent, resolve: [RecipesResovlerService] },
-        ],
-    },
+    // {
+    //     path: 'recipes',
+    //     canActivate: [AuthGuardService],
+    //     component: RecipesComponent,
+    //     children: [
+    //         { path: '', component: RecipeStartComponent },
+    //         // New should be before id as new will be considered as id and detail component will be loaded
+    //         { path: 'new', component: RecipeEditComponent },
+    //         { path: ':id', component: RecipeDetailComponent, resolve: [RecipesResovlerService] },
+    //         { path: ':id/edit', component: RecipeEditComponent, resolve: [RecipesResovlerService] },
+    //     ],
+    // },
     // { path: 'new', component: RecipeEditComponent },
 ];
 
