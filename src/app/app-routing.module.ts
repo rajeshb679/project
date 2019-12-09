@@ -18,7 +18,7 @@ const appRoutes: Routes = [
     pathMatch: 'prefix' means, the first route where the path matches the start of the URL is chosen, but then the route matching algorithm is continuing searching for matching child routes where the rest of the URL matches.
     */
     { path: 'login', component: AuthComponent },
-    { path: 'shopping-list', component: ShoppingListComponent },
+    // { path: 'shopping-list', component: ShoppingListComponent },
     // {
     //     path: 'recipes',
     //     canActivate: [AuthGuardService],
