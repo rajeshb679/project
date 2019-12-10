@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ShoppingListComponent } from './shopping-list/shopping-list.component';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { AuthComponent } from './auth/auth.component';
 
 const appRoutes: Routes = [
@@ -32,10 +31,12 @@ const appRoutes: Routes = [
     //     ],
     // },
     // { path: 'new', component: RecipeEditComponent },
+    { path: 'recipes', loadChildren: './recipes/recipes.module#RecipesModule' },
+    { path: 'shopping-list', loadChildren: './shopping-list/shopping.module#ShoppingModule' },
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(appRoutes)],
+    imports: [RouterModule.forRoot(appRoutes, { preloadingStrategy: PreloadAllModules })],
     exports: [RouterModule],
 })
 export class AppRoutingModule {}

@@ -6,8 +6,8 @@ import { HeaderComponent } from './header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthComponent } from './auth/auth.component';
-import { RecipesModule } from './recipes/recipes.module';
-import { ShoppingModule } from './shopping-list/shopping.module';
+// import { RecipesModule } from './recipes/recipes.module';
+// import { ShoppingModule } from './shopping-list/shopping.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core.module';
 
@@ -20,8 +20,8 @@ import { CoreModule } from './core.module';
         HttpClientModule,
         ReactiveFormsModule,
         SharedModule,
-        RecipesModule,
-        ShoppingModule,
+        // RecipesModule,
+        // ShoppingModule, - Eagerly Loaded
         CoreModule,
     ],
 
