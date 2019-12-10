@@ -30,6 +30,7 @@ export class RecipeDetailComponent implements OnInit {
     // }
 
     sendToShoppingList(): void {
+        console.log(this.recipe.ingredient);
         this.recipeService.addIngredients(this.recipe.ingredient);
     }
 

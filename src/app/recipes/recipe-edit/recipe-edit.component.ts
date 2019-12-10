@@ -40,12 +40,13 @@ export class RecipeEditComponent implements OnInit {
             name: new FormControl(recipeName, Validators.required),
             imagePath: new FormControl(recipeImagePath, Validators.required),
             description: new FormControl(recipeDescription, Validators.required),
-            ingredients: new FormArray([]),
+            ingredient: new FormArray([]),
         });
 
         if (this.editMode && recipe.ingredient) {
             recipe.ingredient.forEach(ingredient => {
-                (this.recipeForm.get('ingredients') as FormArray).push(
+                // console.log(ingredient);
+                (this.recipeForm.get('ingredient') as FormArray).push(
                     new FormGroup({
                         name: new FormControl(ingredient.name, Validators.required),
                         amount: new FormControl(ingredient.amount, [
@@ -55,21 +56,24 @@ export class RecipeEditComponent implements OnInit {
                     })
                 );
             });
-            console.log(this.recipeForm.get('ingredients'));
+            // console.log(this.recipeForm.get('ingredient'));
         }
     }
 
-    getIngredients(): any {
-        console.log((this.recipeForm.get('ingredients') as FormArray).value);
-        return (this.recipeForm.get('ingredients') as FormArray).controls;
+    get getIngredients(): any {
+        // console.log(this.recipeForm);
+        console.log((this.recipeForm.get('ingredient') as FormArray).controls);
+
+        return (this.recipeForm.get('ingredient') as FormArray).controls;
     }
 
     onDeleteIngredient(index: number): void {
-        (this.recipeForm.get('ingredients') as FormArray).removeAt(index);
+        (this.recipeForm.get('ingredient') as FormArray).removeAt(index);
     }
 
     onSubmit(): void {
         if (this.editMode) {
+            // console.log(this.recipeForm.value);
             this.recipeService.updateRecipe(this.id, this.recipeForm.value);
         } else {
             this.recipeService.addRecipe(this.recipeForm.value);
@@ -78,7 +82,7 @@ export class RecipeEditComponent implements OnInit {
     }
 
     onAddIngredient(): void {
-        (this.recipeForm.get('ingredients') as FormArray).push(
+        (this.recipeForm.get('ingredient') as FormArray).push(
             new FormGroup({
                 name: new FormControl(' ', Validators.required),
                 amount: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),

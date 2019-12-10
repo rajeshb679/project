@@ -52,6 +52,7 @@ export class RecipeService {
 
     updateRecipe(index: number, recipe: Recipe): void {
         this.recipes[index] = recipe;
+        console.log(this.recipes);
         this.recipesChange.next(this.recipes.slice());
     }
 
