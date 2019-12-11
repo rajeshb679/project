@@ -4,6 +4,7 @@ import { Observable, throwError, Subject, BehaviorSubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from './user.model';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 export interface AuthResponseData {
     idToken: string;
@@ -25,7 +26,7 @@ export class AuthService {
     singUp(email: string, password: string): Observable<AuthResponseData> {
         return this.http
             .post<AuthResponseData>(
-                'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCpsWcBX1Jb4Gin0kwbmGePQjCcswVMigA',
+                'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + environment.fireBaseKey,
                 {
                     email: email,
                     password: password,
