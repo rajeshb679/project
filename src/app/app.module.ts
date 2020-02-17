@@ -10,6 +10,8 @@ import { AuthComponent } from './auth/auth.component';
 // import { ShoppingModule } from './shopping-list/shopping.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core.module';
+import { StoreModule } from '@ngrx/store';
+import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer';
 
 @NgModule({
     declarations: [AppComponent, HeaderComponent, AuthComponent],
@@ -23,6 +25,7 @@ import { CoreModule } from './core.module';
         // RecipesModule,
         // ShoppingModule, - Eagerly Loaded
         CoreModule,
+        StoreModule.forRoot({ shoppingList: shoppingListReducer }),
     ],
 
     bootstrap: [AppComponent],
