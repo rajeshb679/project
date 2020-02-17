@@ -3,6 +3,8 @@ import { Ingredient } from 'src/app/shared/ingredient.model';
 import { ShoppingService } from 'src/app/services/shopping.service';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AddIngredient } from '../store/shopping-list.actions';
 
 @Component({
     selector: 'app-shopping-edit',
@@ -18,7 +20,10 @@ export class ShoppingEditComponent implements OnInit {
     editedItemIndex: number;
     editIngredient: Ingredient;
 
-    constructor(private shoppingService: ShoppingService) {}
+    constructor(
+        private shoppingService: ShoppingService,
+        private store: Store<{ shoppingList: { Ingredients: Ingredient[] } }>
+    ) {}
 
     ngOnInit(): void {
         this.shoppingService.editItemEvent.subscribe(index => {
@@ -52,7 +57,9 @@ export class ShoppingEditComponent implements OnInit {
         if (this.editMode) {
             this.shoppingService.updateItem(this.editedItemIndex, ingredient);
         } else {
-            this.shoppingService.addItem(ingredient);
+            // this.shoppingService.addItem(ingredient);
+            this.store.dispatch(new AddIngredient(ingredient));
+            console.log(new AddIngredient(ingredient));
         }
         this.editMode = false;
         this.itemForm.reset();
