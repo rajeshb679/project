@@ -4,7 +4,7 @@ import { ShoppingService } from 'src/app/services/shopping.service';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AddIngredient, UpdateIngredient, DeleteIngredient } from '../store/shopping-list.actions';
+import { AddIngredient, UpdateIngredient, DeleteIngredient, StopEdit } from '../store/shopping-list.actions';
 import * as fromShoppingList from '../store/shopping-list.reducer';
 
 @Component({
@@ -24,15 +24,28 @@ export class ShoppingEditComponent implements OnInit {
     constructor(private shoppingService: ShoppingService, private store: Store<fromShoppingList.AppState>) {}
 
     ngOnInit(): void {
-        this.shoppingService.editItemEvent.subscribe(index => {
-            this.editMode = true;
-            this.editedItemIndex = index;
-            this.editIngredient = this.shoppingService.getIngredient(index);
-            this.itemForm.setValue({
-                name: this.editIngredient.name,
-                amount: this.editIngredient.amount,
-            });
+        this.store.select('shoppingList').subscribe(stateData => {
+            if (stateData.editedIngredientIndex > -1) {
+                this.editMode = true;
+                this.editedItemIndex = stateData.editedIngredientIndex;
+                this.editIngredient = stateData.editedIngredient;
+                this.itemForm.setValue({
+                    name: this.editIngredient.name,
+                    amount: this.editIngredient.amount,
+                });
+            } else {
+                this.editMode = false;
+            }
         });
+        // this.shoppingService.editItemEvent.subscribe(index => {
+        //     this.editMode = true;
+        //     this.editedItemIndex = index;
+        //     this.editIngredient = this.shoppingService.getIngredient(index);
+        //     this.itemForm.setValue({
+        //         name: this.editIngredient.name,
+        //         amount: this.editIngredient.amount,
+        //     });
+        // });
     }
 
     addItem(): void {
@@ -66,6 +79,7 @@ export class ShoppingEditComponent implements OnInit {
 
     clear(): void {
         this.itemForm.reset();
+        this.store.dispatch(new StopEdit());
         this.editMode = false;
     }
 
