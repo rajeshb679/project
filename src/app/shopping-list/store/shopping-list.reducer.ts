@@ -20,6 +20,29 @@ export function shoppingListReducer(state = initialState, action: ShoppingListAc
                 ...state,
                 Ingredients: [...state.Ingredients, ...action.payLoad],
             };
+        case ShoppingListActins.UPDATE_INGREDIENT:
+            const ingredient = state.Ingredients[action.payLoad.index];
+            const updatedIngredient = {
+                ...ingredient,
+                ...action.payLoad.ingredient,
+            };
+
+            const updatedIngredients = [...state.Ingredients];
+            updatedIngredients[action.payLoad.index] = updatedIngredient;
+            return {
+                ...state,
+                Ingredients: updatedIngredients,
+            };
+        case ShoppingListActins.DELETE_INGREDIENT:
+            // const deleteIngredients = [...state.Ingredients];
+            // deleteIngredients.slice(action.payLoad.index, 1);
+            return {
+                ...state,
+                // Ingredients: deleteIngredients,
+                Ingredients: state.Ingredients.filter((element, index) => {
+                    return index !== action.payLoad.index;
+                }),
+            };
         default:
             return { ...state };
     }

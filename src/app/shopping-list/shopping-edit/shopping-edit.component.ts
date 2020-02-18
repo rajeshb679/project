@@ -4,7 +4,7 @@ import { ShoppingService } from 'src/app/services/shopping.service';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AddIngredient } from '../store/shopping-list.actions';
+import { AddIngredient, UpdateIngredient, DeleteIngredient } from '../store/shopping-list.actions';
 
 @Component({
     selector: 'app-shopping-edit',
@@ -55,7 +55,8 @@ export class ShoppingEditComponent implements OnInit {
         const value = form.value;
         const ingredient = new Ingredient(value.name, value.amount);
         if (this.editMode) {
-            this.shoppingService.updateItem(this.editedItemIndex, ingredient);
+            // this.shoppingService.updateItem(this.editedItemIndex, ingredient);
+            this.store.dispatch(new UpdateIngredient({ index: this.editedItemIndex, ingredient: ingredient }));
         } else {
             // this.shoppingService.addItem(ingredient);
             this.store.dispatch(new AddIngredient(ingredient));
@@ -71,7 +72,8 @@ export class ShoppingEditComponent implements OnInit {
     }
 
     deleteItem(): void {
-        this.shoppingService.deleteItem(this.editedItemIndex);
+        // this.shoppingService.deleteItem(this.editedItemIndex);
+        this.store.dispatch(new DeleteIngredient({ index: this.editedItemIndex }));
         this.clear();
     }
 }
