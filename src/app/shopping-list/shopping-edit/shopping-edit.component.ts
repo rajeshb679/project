@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AddIngredient, UpdateIngredient, DeleteIngredient } from '../store/shopping-list.actions';
+import * as fromShoppingList from '../store/shopping-list.reducer';
 
 @Component({
     selector: 'app-shopping-edit',
@@ -20,10 +21,7 @@ export class ShoppingEditComponent implements OnInit {
     editedItemIndex: number;
     editIngredient: Ingredient;
 
-    constructor(
-        private shoppingService: ShoppingService,
-        private store: Store<{ shoppingList: { Ingredients: Ingredient[] } }>
-    ) {}
+    constructor(private shoppingService: ShoppingService, private store: Store<fromShoppingList.AppState>) {}
 
     ngOnInit(): void {
         this.shoppingService.editItemEvent.subscribe(index => {
