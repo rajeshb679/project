@@ -3,6 +3,9 @@ import { Recipe } from '../recipes/recipe.model';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingService } from './shopping.service';
 import { Subject } from 'rxjs';
+import { Store } from '@ngrx/store';
+
+import * as ShoppingListActins from '../shopping-list/store/shopping-list.actions';
 
 @Injectable({
     providedIn: 'root',
@@ -27,7 +30,10 @@ export class RecipeService {
 
     private recipes: Recipe[] = [];
 
-    constructor(private shoppingService: ShoppingService) {}
+    constructor(
+        private shoppingService: ShoppingService,
+        private store: Store<{ shoppingList: { Ingredients: Ingredient[] } }>
+    ) {}
 
     getRecipes(): Recipe[] {
         return this.recipes.slice();
@@ -42,7 +48,8 @@ export class RecipeService {
     }
 
     addIngredients(ingredients: Ingredient[]): void {
-        this.shoppingService.addItems(ingredients);
+        // this.shoppingService.addItems(ingredients);
+        this.store.dispatch(new ShoppingListActins.AddIngredients(ingredients));
     }
 
     addRecipe(recipe: Recipe): void {
