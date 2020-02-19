@@ -23,7 +23,7 @@ import * as AuthActions from './store/auth.actions';
 })
 export class AuthService {
     // user = new Subject<User>();
-    user = new BehaviorSubject<User>(null);
+    // user = new BehaviorSubject<User>(null);
     private tokenExpiationTimer: any;
     constructor(private http: HttpClient, private router: Router, private store: Store<fromApp.AppState>) {}
 
