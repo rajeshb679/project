@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 
-export const LOGIN = 'LOGIN';
-export const LOGOUT = 'LOGOUT';
+export const LOGIN = '[Auth] LOGIN';
+export const LOGOUT = '[Auth] LOGOUT';
 
 // ? can't i implete a inteface
 // ? you can but can't initialize the data using constructor..... - Verify
