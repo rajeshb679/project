@@ -47,8 +47,8 @@ export class AuthComponent implements OnInit, OnDestroy {
     }
 
     onSubmit(formData: NgForm): void {
-        this.isLoading = true;
-        console.log({ ...formData });
+        // this.isLoading = true;
+        // console.log({ ...formData });
 
         if (this.isLogin) {
             // this.authObs = this.authService.loginIn(formData.value.email, formData.value.password);
@@ -56,7 +56,10 @@ export class AuthComponent implements OnInit, OnDestroy {
                 new AuthActions.LoginStart({ email: formData.value.email, password: formData.value.password })
             );
         } else {
-            this.authObs = this.authService.singUp(formData.value.email, formData.value.password);
+            // this.authObs = this.authService.singUp(formData.value.email, formData.value.password);
+            this.store.dispatch(
+                new AuthActions.SignUp({ email: formData.value.email, password: formData.value.password })
+            );
         }
 
         // this.authObs.subscribe(
@@ -72,7 +75,7 @@ export class AuthComponent implements OnInit, OnDestroy {
         // );
 
         formData.reset();
-        this.isLoading = false;
+        // this.isLoading = false;
     }
 
     onCloseAlertWindow(): void {

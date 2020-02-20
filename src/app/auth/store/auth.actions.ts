@@ -6,6 +6,8 @@ export const LOGIN_FAIL = '[Auth] Login Fail';
 export const LOGIN = '[Auth] LOGIN';
 export const LOGOUT = '[Auth] LOGOUT';
 
+export const SIGNUP = '[Auth ] Sign Up';
+
 // ? can't i implete a inteface
 // ? you can but can't initialize the data using constructor..... - Verify
 export class Login implements Action {
@@ -27,4 +29,9 @@ export class LoginFail implements Action {
     constructor(public payLoad: { authError: string }) {}
 }
 
-export type AuthActions = Login | Logout | LoginStart | LoginFail;
+export class SignUp implements Action {
+    readonly type = SIGNUP;
+    constructor(public payLoad: { email: string; password: string }) {}
+}
+
+export type AuthActions = Login | Logout | LoginStart | LoginFail | SignUp;
