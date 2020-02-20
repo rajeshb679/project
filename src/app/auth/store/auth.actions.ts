@@ -5,7 +5,7 @@ export const LOGIN_FAIL = '[Auth] Login Fail';
 
 export const LOGIN = '[Auth] LOGIN';
 export const LOGOUT = '[Auth] LOGOUT';
-
+export const CLEAR_ERROR = '[Auth] Clear Error';
 export const SIGNUP = '[Auth ] Sign Up';
 
 // ? can't i implete a inteface
@@ -34,4 +34,8 @@ export class SignUp implements Action {
     constructor(public payLoad: { email: string; password: string }) {}
 }
 
-export type AuthActions = Login | Logout | LoginStart | LoginFail | SignUp;
+export class ClearError implements Action {
+    readonly type = CLEAR_ERROR;
+}
+
+export type AuthActions = Login | Logout | LoginStart | LoginFail | SignUp | ClearError;
