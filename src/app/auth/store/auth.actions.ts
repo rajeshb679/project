@@ -7,6 +7,7 @@ export const LOGIN = '[Auth] LOGIN';
 export const LOGOUT = '[Auth] LOGOUT';
 export const CLEAR_ERROR = '[Auth] Clear Error';
 export const SIGNUP = '[Auth ] Sign Up';
+export const AUTO_LOGIN = 'AUTOLOGIN';
 
 // ? can't i implete a inteface
 // ? you can but can't initialize the data using constructor..... - Verify
@@ -38,4 +39,8 @@ export class ClearError implements Action {
     readonly type = CLEAR_ERROR;
 }
 
-export type AuthActions = Login | Logout | LoginStart | LoginFail | SignUp | ClearError;
+export class AutoLogin implements Action {
+    readonly type = AUTO_LOGIN;
+}
+
+export type AuthActions = Login | Logout | LoginStart | LoginFail | SignUp | ClearError | AutoLogin;

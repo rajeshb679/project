@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
+import { User } from '../user.model';
 
 export interface AuthResponseData {
     idToken: string;
@@ -34,6 +35,8 @@ export class AuthEffects {
                 .pipe(
                     map(resData => {
                         const expireData = new Date(new Date().getTime() + +resData.expiresIn * 1000);
+                        const user = new User(resData.email, resData.idToken, resData.refreshToken, expireData);
+                        localStorage.setItem('userData', JSON.stringify(user));
                         return new AuthActions.Login({
                             email: resData.email,
                             token: resData.idToken,
@@ -79,6 +82,8 @@ export class AuthEffects {
                 .pipe(
                     map(resData => {
                         const expireData = new Date(new Date().getTime() + +resData.expiresIn * 1000);
+                        const user = new User(resData.email, resData.idToken, resData.refreshToken, expireData);
+                        localStorage.setItem('userData', JSON.stringify(user));
                         return new AuthActions.Login({
                             email: resData.email,
                             token: resData.idToken,
@@ -109,12 +114,52 @@ export class AuthEffects {
         })
     );
 
+    @Effect({ dispatch: false })
+    authLogout = this.actions$.pipe(
+        ofType(AuthActions.LOGOUT),
+        tap(() => {
+            localStorage.removeItem('userData');
+        })
+    );
+
     @Effect({ dispatch: false }) // no actions to dispatch at the end
     authRedirect = this.actions$.pipe(
         tap(console.log),
         ofType(AuthActions.LOGIN, AuthActions.LOGOUT),
         tap(() => {
             this.router.navigate(['/']);
+        })
+    );
+
+    @Effect()
+    autoLogin = this.actions$.pipe(
+        ofType(AuthActions.AUTO_LOGIN),
+        map(() => {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            if (!userData) {
+                return { type: 'DUMMY' };
+            }
+            const loadedUser = new User(
+                userData.email,
+                userData.id,
+                userData._token,
+                new Date(userData._tokenExpirationDate)
+            );
+
+            if (loadedUser.token) {
+                // this.user.next(loadedUser);
+                return new AuthActions.Login({
+                    email: loadedUser.email,
+                    userId: loadedUser.id,
+                    token: loadedUser.token,
+                    expirationDate: new Date(userData._tokenExpirationDate),
+                });
+
+                // const expirationDate = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
+
+                // this.autoLogout(expirationDate);
+            }
+            return { type: 'DUMMY' };
         })
     );
 
