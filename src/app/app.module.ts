@@ -20,6 +20,7 @@ import * as fromApp from './store/app.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './auth/store/auth.effects';
 import { environment } from 'src/environments/environment';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
 @NgModule({
     declarations: [AppComponent, HeaderComponent, AuthComponent],
@@ -33,10 +34,12 @@ import { environment } from 'src/environments/environment';
         // RecipesModule,
         // ShoppingModule, - Eagerly Loaded
         CoreModule,
-        StoreDevtoolsModule.instrument({ logOnly: environment.production }),
+
         // StoreModule.forRoot({ shoppingList: shoppingListReducer, auth: authReducer }),
         EffectsModule.forRoot([AuthEffects]),
         StoreModule.forRoot(fromApp.appReducer),
+        StoreDevtoolsModule.instrument({ logOnly: environment.production }),
+        StoreRouterConnectingModule.forRoot(),
     ],
 
     bootstrap: [AppComponent],
