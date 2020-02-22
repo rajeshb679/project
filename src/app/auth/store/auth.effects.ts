@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../user.model';
+import { AuthService } from '../auth.service';
 
 export interface AuthResponseData {
     idToken: string;
@@ -33,6 +34,9 @@ export class AuthEffects {
                     }
                 )
                 .pipe(
+                    tap(resData => {
+                        this.authService.setLogoutTimer(+resData.expiresIn * 1000);
+                    }),
                     map(resData => {
                         const expireData = new Date(new Date().getTime() + +resData.expiresIn * 1000);
                         const user = new User(resData.email, resData.idToken, resData.refreshToken, expireData);
@@ -80,6 +84,9 @@ export class AuthEffects {
                     }
                 )
                 .pipe(
+                    tap(resData => {
+                        this.authService.setLogoutTimer(+resData.expiresIn * 1000);
+                    }),
                     map(resData => {
                         const expireData = new Date(new Date().getTime() + +resData.expiresIn * 1000);
                         const user = new User(resData.email, resData.idToken, resData.refreshToken, expireData);
@@ -119,6 +126,8 @@ export class AuthEffects {
         ofType(AuthActions.LOGOUT),
         tap(() => {
             localStorage.removeItem('userData');
+            this.authService.clearLogoutTimer();
+            this.router.navigate(['/login']);
         })
     );
 
@@ -148,6 +157,9 @@ export class AuthEffects {
 
             if (loadedUser.token) {
                 // this.user.next(loadedUser);
+
+                this.authService.setLogoutTimer(+userData.expiresIn * 1000);
+
                 return new AuthActions.Login({
                     email: loadedUser.email,
                     userId: loadedUser.id,
@@ -163,5 +175,10 @@ export class AuthEffects {
         })
     );
 
-    constructor(private actions$: Actions, private http: HttpClient, private router: Router) {}
+    constructor(
+        private actions$: Actions,
+        private http: HttpClient,
+        private router: Router,
+        private authService: AuthService
+    ) {}
 }

@@ -114,8 +114,16 @@ export class AuthService {
 
     autoLogout(expirationTime: number): void {
         this.tokenExpiationTimer = setTimeout(() => {
-            this.logout();
+            // this.logout();
+            this.store.dispatch(new AuthActions.Logout());
         }, expirationTime);
+    }
+
+    setLogoutTimer(expirationTime: number) {
+        this.autoLogout(expirationTime);
+    }
+    clearLogoutTimer() {
+        this.tokenExpiationTimer = null;
     }
 
     private handleAuth(email: string, id: string, token: string, expies: number): any {
